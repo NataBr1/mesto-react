@@ -6,21 +6,21 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 function App() {
-  const [openPopupAvatar, setOpenPopupAvatar] = React.useState(false);
-  const [openPopupUser, setOpenPopupUser] = React.useState(false);
-  const [openPopupPlace, setOpenPopupPlace] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditAvatarClick() {
-    setOpenPopupAvatar(true)
+    setIsEditAvatarPopupOpen(true)
   }
 
   function handleEditProfileClick() {
-    setOpenPopupUser(true)
+    setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
-    setOpenPopupPlace(true)
+    setIsAddPlacePopupOpen(true)
   }
 
   function handleCardClick(card) {
@@ -28,10 +28,10 @@ function App() {
   }
 
   function closeAllPopups() {
-    setOpenPopupAvatar(false)
-    setOpenPopupUser(false)
-    setOpenPopupPlace(false)
-    setSelectedCard(false)
+    setIsEditAvatarPopupOpen(false)
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setSelectedCard(null)
   }
 
   return (
@@ -40,7 +40,7 @@ function App() {
       <Header />
       <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
       <Footer />
-      <PopupWithForm isOpen={openPopupAvatar} name="avatar" title="Обновить аватар" buttonTitle="Сохранить" onClose={closeAllPopups}>
+      <PopupWithForm isOpen={isEditAvatarPopupOpen} name="avatar" title="Обновить аватар" buttonTitle="Сохранить" onClose={closeAllPopups}>
         <label className="field">
           <input
             id="avatar-input"
@@ -53,7 +53,7 @@ function App() {
           <span className="popup__input-error avatar-input-error" />
         </label>
       </PopupWithForm>
-      <PopupWithForm isOpen={openPopupUser} name="user" title="Редактировать профиль" buttonTitle="Сохранить" onClose={closeAllPopups}>
+      <PopupWithForm isOpen={isEditProfilePopupOpen} name="user" title="Редактировать профиль" buttonTitle="Сохранить" onClose={closeAllPopups}>
         <label className="field">
             <input
               id="name-input"
@@ -83,7 +83,7 @@ function App() {
             <span className="popup__input-error job-input-error" />
           </label>
       </PopupWithForm>
-      <PopupWithForm isOpen={openPopupPlace} name="place" title="Новое место" buttonTitle="Сохранить" onClose={closeAllPopups}>
+      <PopupWithForm isOpen={isAddPlacePopupOpen} name="place" title="Новое место" buttonTitle="Сохранить" onClose={closeAllPopups}>
         <label className="field">
           <input
             id="place-input"

@@ -3,9 +3,9 @@ import api from "../utils/Api";
 import Card from "./Card";
 
 function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription , seUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
+  const [userName, setUserName] = React.useState("");
+  const [userDescription , seUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -18,7 +18,7 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
       .catch((err) => {
         console.log(`${err}`);
       })
-  })
+  }, [])
 
   React.useEffect(() => {
     api.getInitialCards()
@@ -68,9 +68,9 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
       {/* Карточки */}
       <section className="elements">
-        {cards.map((card, id) => (
+        {cards.map((card, _id) => (
             <Card
-              key={id}
+              key={_id}
               link={card.link}
               name={card.name}
               likes={card.likes.length}
