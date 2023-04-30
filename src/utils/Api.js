@@ -29,7 +29,7 @@ class Api {
   }
 
   //Метод изменения данных о пользователе
-  changeUserInfo(data) {
+  setUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -42,7 +42,7 @@ class Api {
   }
 
   //Метод изменения аватара
-  changeAvatar(data) {
+  setUserAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,

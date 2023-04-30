@@ -1,34 +1,9 @@
 import React from "react"
-import api from "../utils/Api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription , seUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api.getUserInfo()
-      .then(res => {
-        setUserName(res.name)
-        seUserDescription(res.about)
-        setUserAvatar(res.avatar)
-      })
-      .catch((err) => {
-        console.log(`${err}`);
-      })
-  }, [])
-
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then(cardData => {
-        setCards(cardData);
-      })
-      .catch((err) => {
-        console.log(`${err}`);
-      })
-  }, [])
+function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete, cards}) {
+  const currentUser = React.useContext(CurrentUserContext); //11ПР Используйте контекст в Main
 
   return (
     <main className="content">
@@ -38,21 +13,21 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
         <div className="profile__user">
 
           <div className="profile__avatar-group" >
-            <img className="profile__avatar" src={userAvatar} alt="Аватар" />
+            <img className="profile__avatar" src={currentUser.avatar} alt="Аватар" /> {/* //11ПР Используйте контекст в Main */}
             <button
               className="profile__avatar-edit"
               onClick={onEditAvatar} />
           </div>
 
           <div className="profile__intro">
-            <h1 className="profile__title">{userName}</h1>
+            <h1 className="profile__title">{currentUser.name}</h1> {/* //11ПР Используйте контекст в Main */}
             <button
               className="profile__edit-button link-hover"
               type="button"
               aria-label="Редактировать профиль"
               onClick={onEditProfile}
             />
-            <p className="profile__subtitle">{userDescription}</p>
+            <p className="profile__subtitle">{currentUser.about}</p> {/* //11ПР Используйте контекст в Main */}
           </div>
 
         </div>
@@ -70,11 +45,13 @@ function Main ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
       <section className="elements">
         {cards.map((card, _id) => (
             <Card
-              key={_id}
+              key={card._id}
               link={card.link}
               name={card.name}
               likes={card.likes.length}
               onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
               card={card}
             />
           ))}
